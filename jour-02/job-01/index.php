@@ -36,10 +36,11 @@ $students = find_all_students();
     <h1>Liste des étudiants</h1>
     <table border="1">
         <tr>
-            <th>ID</th>
-            <th>Nom</th>
-            <th>Prénom</th>
-            <th>Date de naissance</th>
+            <th>grade_ID</th>
+            <th>Email</th>
+            <th>FullName</th>
+            <th>Birthdate</th>
+            <th>gender</th>
         </tr>
         <?php foreach ($students as $student) : ?>
             <tr>
