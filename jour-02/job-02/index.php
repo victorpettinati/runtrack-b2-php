@@ -25,9 +25,9 @@ function find_one_student($email) : array {
     return $student;
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    if (isset($_GET['input-email-student'])) {
-        $email = $_GET['input-email-student'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['input-email-student'])) {
+        $email = $_POST['input-email-student'];
         $student = find_one_student($email);
     }
 }
@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 </head>
 <body>
     <h1>Recherche d'étudiant par e-mail</h1>
-    <form method="get" action="">
+    <form method="POST" action="">
         <label for="input-email-student">Entrez l'e-mail de l'étudiant :</label>
         <input type="text" name="input-email-student" id="input-email-student">
         <input type="submit" value="Rechercher">
