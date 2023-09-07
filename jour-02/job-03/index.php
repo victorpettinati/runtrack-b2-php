@@ -1,5 +1,4 @@
 <?php
-// Fonction pour se connecter à la base de données
 function connect_to_database() {
     $host = 'localhost'; 
     $dbname = 'Ip_official'; 
@@ -15,20 +14,18 @@ function connect_to_database() {
     }
 }
 
-// Fonction pour insérer un nouvel étudiant dans la base de données
-function insert_student($email, $fullname, $gender, $birthdate, $gradeId) : bool {
+function insert_student($email, $fullname, $gender, $birthdate, $grade_id) : bool {
     $pdo = connect_to_database();
-    $query = "INSERT INTO student (email, fullname, gender, birthdate, grade_id) VALUES (:email, :fullname, :gender, :birthdate, :gradeId)";
+    $query = "INSERT INTO student (email, fullname, gender, birthdate, grade_id) VALUES (:email, :fullname, :gender, :birthdate, :grade_id)";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(':email', $email, PDO::PARAM_STR);
     $stmt->bindParam(':fullname', $fullname, PDO::PARAM_STR);
     $stmt->bindParam(':gender', $gender, PDO::PARAM_STR);
-    $stmt->bindParam(':birthdate', $birthdate->format('Y-m-d'), PDO::PARAM_STR);
-    $stmt->bindParam(':gradeId', $gradeId, PDO::PARAM_INT);
+    $stmt->bindValue(':birthdate', $birthdate->format('Y-m-d'), PDO::PARAM_STR);
+    $stmt->bindParam(':grade_id', $grade_id, PDO::PARAM_INT);
     return $stmt->execute();
 }
 
-// Vérifier si le formulaire a été soumis
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['input-email'];
     $fullname = $_POST['input-fullname'];
@@ -58,19 +55,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <label for="input-email">E-mail :</label>
         <input type="email" name="input-email" required><br>
 
-        <label for="input-fullname">Nom complet :</label>
+        <label for="input-fullname">Full Name :</label>
         <input type="text" name="input-fullname" required><br>
 
-        <label for="input-gender">Genre :</label>
+        <label for="input-gender">Gender :</label>
         <select name="input-gender" required>
             <option value="male">Homme</option>
             <option value="female">Femme</option>
+            <option value="female">Autres</option>
         </select><br>
 
-        <label for="input-birthdate">Date de naissance :</label>
+        <label for="input-birthdate">Birth Date :</label>
         <input type="date" name="input-birthdate" required><br>
 
-        <label for="input-grade_id">ID de la classe :</label>
+        <label for="input-grade_id">Grade ID</label>
         <input type="number" name="input-grade_id" required><br>
 
         <input type="submit" value="Ajouter l'étudiant">
